@@ -1,5 +1,0 @@
-{{ if or (and .Site.Params.enableComments (ne .Params.enableComments false)) (eq .Params.enableComments true) }}
-  <div id="comment">
-    {{ template "_internal/disqus.html" . }}
-  </div>
-{{ end }}

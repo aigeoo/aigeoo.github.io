@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>WatchCom Security — تصاميم مقترحة للصفحة الرئيسية</title>
+  <meta name="description" content="ستة اتجاهات تصميمية للصفحة الرئيسية لشركة WatchCom للأمن السيبراني — نسخة عربية." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { sans:['Cairo','Segoe UI','system-ui','sans-serif'] },
+      colors: { ink:{900:'#0A0F1A',800:'#0F1B2D',700:'#16233A',600:'#24344E',100:'#E6EAF1'}, muted:'#94A3B8' },
+    } } };
+  </script>
+
+  <style>
+    :root { --brand-red:#C8102E; --brand-red-hover:#A50D26; }
+    body { font-family:'Cairo','Segoe UI',system-ui,sans-serif; line-height:1.75; }
+    .num { direction:ltr; unicode-bidi:isolate; }
+    .btn-red { background:var(--brand-red); } .btn-red:hover { background:var(--brand-red-hover); }
+    .swatch { width:14px;height:14px;border-radius:4px; }
+  </style>
+</head>
+
+<body class="bg-ink-900 text-ink-100 antialiased">
+  <div class="h-1" style="background:var(--brand-red)"></div>
+
+  <!-- HEADER -->
+  <header class="mx-auto max-w-[1200px] px-[clamp(1rem,5vw,2rem)] pt-14 pb-8">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2.5 h-2.5 rounded-full" style="background:var(--brand-red)"></span>
+      <span class="text-lg font-extrabold" dir="ltr">WatchCom</span>
+      <span class="text-sm text-muted border-s border-ink-600 ps-2 ms-1">الأمن السيبراني</span>
+    </div>
+    <h1 class="mt-8 text-[clamp(2rem,5vw,3.25rem)] font-extrabold tracking-tight">ستة اتجاهات تصميمية للصفحة الرئيسية</h1>
+    <p class="mt-4 text-lg text-ink-100/75 max-w-2xl">
+      كل تصميمٍ يقدّم انطباعًا أوّليًا مختلفًا، بخطٍّ عربي مميّز وأسلوبٍ خاص — مع الحفاظ على
+      الهوية اللونية الموحّدة (الأحمر المؤسسي) وبنية عربية أصيلة تدعم الكتابة من اليمين لليسار.
+    </p>
+    <div class="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted">
+      <span class="inline-flex items-center gap-2"><span class="swatch" style="background:var(--brand-red)"></span> الأحمر مؤقّت (<span class="num" dir="ltr">#C8102E</span>) — يُستبدل بلون الشعار</span>
+      <span>·</span>
+      <span>أرقام لاتينية · خطوط عربية أصيلة · متجاوب بالكامل</span>
+    </div>
+  </header>
+
+  <!-- GRID -->
+  <main class="mx-auto max-w-[1200px] px-[clamp(1rem,5vw,2rem)] pb-20">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+      <!-- v1 -->
+      <article class="group rounded-2xl bg-ink-800 border border-ink-600/70 overflow-hidden flex flex-col hover:border-[color:var(--brand-red)] transition-colors">
+        <div class="h-32 relative overflow-hidden" style="background:linear-gradient(135deg,#0F1B2D,#16233A)">
+          <div class="absolute inset-0 opacity-20" style="background:radial-gradient(circle at 80% 20%,var(--brand-red),transparent 50%)"></div>
+          <div class="absolute bottom-3 inset-inline-start-4 text-xs font-bold text-white/60">IBM Plex Sans Arabic</div>
+        </div>
+        <div class="p-6 flex flex-col grow">
+          <div class="flex items-center gap-2 text-xs font-bold text-muted"><span class="num">01</span> · الثقة والمصداقية</div>
+          <h2 class="mt-2 text-xl font-extrabold text-white">سلطة مؤسسية راسخة</h2>
+          <p class="mt-2 text-ink-100/70 text-sm grow">قاعدة كحلية رصينة، إحصاءات كثيفة، وأحمرٌ محسوب — الانطباع: «مزوّدٌ جادّ وعريق».</p>
+          <a href="d1/" class="btn-red mt-5 inline-flex items-center justify-center gap-2 text-white font-bold rounded-lg px-4 py-2.5 text-sm transition-colors">عرض التصميم <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </article>
+
+      <!-- v2 -->
+      <article class="group rounded-2xl bg-ink-800 border border-ink-600/70 overflow-hidden flex flex-col hover:border-[color:var(--brand-red)] transition-colors">
+        <div class="h-32 relative overflow-hidden" style="background:linear-gradient(135deg,#F5F7FA,#E2E8F0)">
+          <div class="absolute top-4 inset-inline-end-4 w-24 h-16 rounded bg-white shadow-lg border-t-4" style="border-color:var(--brand-red)"></div>
+          <div class="absolute bottom-3 inset-inline-start-4 text-xs font-bold text-slate-500">Tajawal</div>
+        </div>
+        <div class="p-6 flex flex-col grow">
+          <div class="flex items-center gap-2 text-xs font-bold text-muted"><span class="num">02</span> · تحفيز التحويل</div>
+          <h2 class="mt-2 text-xl font-extrabold text-white">نموذج الطلب أوّلًا</h2>
+          <p class="mt-2 text-ink-100/70 text-sm grow">استمارة تقييم فوق الطية، ودعوةٌ متكرّرة للتواصل — الانطباع: «تحدّث إلينا اليوم».</p>
+          <a href="d2/" class="btn-red mt-5 inline-flex items-center justify-center gap-2 text-white font-bold rounded-lg px-4 py-2.5 text-sm transition-colors">عرض التصميم <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </article>
+
+      <!-- v3 -->
+      <article class="group rounded-2xl bg-ink-800 border border-ink-600/70 overflow-hidden flex flex-col hover:border-[color:var(--brand-red)] transition-colors">
+        <div class="h-32 relative overflow-hidden bg-black">
+          <div class="absolute inset-0" style="background-image:linear-gradient(rgba(124,139,165,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(124,139,165,.14) 1px,transparent 1px);background-size:22px 22px"></div>
+          <div class="absolute inset-0" style="background:radial-gradient(circle at 50% 40%,rgba(200,16,46,.4),transparent 55%)"></div>
+          <div class="absolute bottom-3 inset-inline-start-4 text-xs font-bold text-white/60" dir="ltr">Noto Kufi + Mono</div>
+        </div>
+        <div class="p-6 flex flex-col grow">
+          <div class="flex items-center gap-2 text-xs font-bold text-muted"><span class="num">03</span> · البطل والتقنية</div>
+          <h2 class="mt-2 text-xl font-extrabold text-white">واجهة سيبرانية جريئة</h2>
+          <p class="mt-2 text-ink-100/70 text-sm grow">وضعٌ داكن، توهّجٌ أحمر، وحركة مسحٍ خفيّة — الانطباع: «شركةٌ تقنية بمستوى النخبة».</p>
+          <a href="d3/" class="btn-red mt-5 inline-flex items-center justify-center gap-2 text-white font-bold rounded-lg px-4 py-2.5 text-sm transition-colors">عرض التصميم <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </article>
+
+      <!-- v4 -->
+      <article class="group rounded-2xl bg-ink-800 border border-ink-600/70 overflow-hidden flex flex-col hover:border-[color:var(--brand-red)] transition-colors">
+        <div class="h-32 relative overflow-hidden bg-white">
+          <div class="absolute top-1/2 -translate-y-1/2 inset-inline-start-5 w-8 h-0.5" style="background:var(--brand-red)"></div>
+          <div class="absolute top-1/2 -translate-y-1/2 inset-inline-start-16 w-24 h-2.5 bg-slate-200 rounded"></div>
+          <div class="absolute bottom-3 inset-inline-start-4 text-xs font-bold text-slate-400">Almarai</div>
+        </div>
+        <div class="p-6 flex flex-col grow">
+          <div class="flex items-center gap-2 text-xs font-bold text-muted"><span class="num">04</span> · البساطة والوضوح</div>
+          <h2 class="mt-2 text-xl font-extrabold text-white">هدوءٌ سويسري</h2>
+          <p class="mt-2 text-ink-100/70 text-sm grow">مساحات بيضاء واسعة، رسالةٌ واحدة، وأحمرٌ نادر جدًا — الانطباع: «ثقةٌ فاخرة بلا ضجيج».</p>
+          <a href="d4/" class="btn-red mt-5 inline-flex items-center justify-center gap-2 text-white font-bold rounded-lg px-4 py-2.5 text-sm transition-colors">عرض التصميم <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </article>
+
+      <!-- v5 -->
+      <article class="group rounded-2xl bg-ink-800 border border-ink-600/70 overflow-hidden flex flex-col hover:border-[color:var(--brand-red)] transition-colors">
+        <div class="h-32 relative overflow-hidden" style="background:linear-gradient(135deg,#F4F6F9,#fff)">
+          <div class="absolute top-4 inset-inline-start-4 flex gap-1.5" style="color:var(--brand-red)"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.5 21 12 17.3 5.5 21l1.8-7.3L2 9.1l7-.6L12 2z"/></svg><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.5 21 12 17.3 5.5 21l1.8-7.3L2 9.1l7-.6L12 2z"/></svg><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .6-5.3 4.6L18.5 21 12 17.3 5.5 21l1.8-7.3L2 9.1l7-.6L12 2z"/></svg></div>
+          <div class="absolute bottom-6 inset-inline-start-4 inset-inline-end-4 h-10 bg-white rounded shadow border border-slate-100"></div>
+          <div class="absolute bottom-2 inset-inline-start-4 text-xs font-bold text-slate-400" dir="ltr">Readex Pro</div>
+        </div>
+        <div class="p-6 flex flex-col grow">
+          <div class="flex items-center gap-2 text-xs font-bold text-muted"><span class="num">05</span> · البرهان الاجتماعي</div>
+          <h2 class="mt-2 text-xl font-extrabold text-white">شهادات العملاء تتصدّر</h2>
+          <p class="mt-2 text-ink-100/70 text-sm grow">آراء العملاء ودراسات الحالة فوق الطية — الانطباع: «عملاءٌ حقيقيون يثقون بهم».</p>
+          <a href="d5/" class="btn-red mt-5 inline-flex items-center justify-center gap-2 text-white font-bold rounded-lg px-4 py-2.5 text-sm transition-colors">عرض التصميم <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </article>
+
+      <!-- v6 -->
+      <article class="group rounded-2xl bg-ink-800 border border-ink-600/70 overflow-hidden flex flex-col hover:border-[color:var(--brand-red)] transition-colors">
+        <div class="h-32 relative overflow-hidden" style="background:linear-gradient(160deg,#5c0a17,#0A0F1A 75%)">
+          <div class="absolute inset-y-0 inset-inline-start-0 w-1" style="background:var(--brand-red)"></div>
+          <div class="absolute top-5 inset-inline-start-6 text-white/90" style="font-family:Amiri,serif"><span class="text-2xl">الخطر ← الاستجابة ← المرونة</span></div>
+          <div class="absolute bottom-3 inset-inline-start-4 text-xs font-bold text-white/60" dir="ltr">Amiri + Markazi</div>
+        </div>
+        <div class="p-6 flex flex-col grow">
+          <div class="flex items-center gap-2 text-xs font-bold text-muted"><span class="num">06</span> · السرد القصصي</div>
+          <h2 class="mt-2 text-xl font-extrabold text-white">حكايةٌ في ثلاثة فصول</h2>
+          <p class="mt-2 text-ink-100/70 text-sm grow">سردٌ تحريري طويل مع رسومٍ بيانية وحركةٍ مرتبطة بالتمرير — الانطباع: «شريكٌ برسالة، لا مجرّد مورّد».</p>
+          <a href="d6/" class="btn-red mt-5 inline-flex items-center justify-center gap-2 text-white font-bold rounded-lg px-4 py-2.5 text-sm transition-colors">عرض التصميم <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="border-t border-ink-600/60">
+    <div class="mx-auto max-w-[1200px] px-[clamp(1rem,5vw,2rem)] py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted">
+      <p>© <span class="num">2026</span> WatchCom Security — تصاميم مقترحة للمراجعة</p>
+      <p>أمنكم الرقمي، مسؤوليتنا</p>
+    </div>
+  </footer>
+</body>
+</html>
