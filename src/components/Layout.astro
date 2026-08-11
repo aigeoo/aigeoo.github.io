@@ -1,0 +1,329 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import {
+  useTranslations,
+  localizePath,
+  alternatePath,
+  dir as localeDir,
+  type Locale,
+} from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogType?: 'website' | 'article';
+  lang?: Locale;
+  // Where the language toggle should point. Defaults to the same page in the
+  // other locale; pages without a 1:1 counterpart (e.g. single-language posts)
+  // pass an explicit fallback so the toggle never lands on a 404.
+  altPath?: string;
+}
+
+const {
+  title,
+  description,
+  canonicalPath = '/',
+  ogType = 'website',
+  lang = 'en',
+  altPath,
+} = Astro.props;
+
+const t = useTranslations(lang);
+const htmlDir = localeDir[lang];
+const siteName = t('site.name');
+
+const site = Astro.site?.toString() ?? 'https://aigeoo.github.io';
+const canonicalUrl = new URL(canonicalPath, site).toString();
+// Replace public/assets/og.png with your own 1200x630 social preview image.
+const ogImageUrl = new URL('/assets/og.png', site).toString();
+const currentPath = Astro.url.pathname;
+
+// Locale-aware nav targets and active-state helpers.
+const homePath = localizePath('/', lang);
+const blogPath = localizePath('/blog/', lang);
+const blogPrefix = localizePath('/blog', lang);
+const aboutPath = localizePath('/about/', lang);
+const rssPath = localizePath('/rss.xml', lang);
+const langTogglePath = altPath ?? alternatePath(currentPath, lang);
+---
+
+<!doctype html>
+<html lang={lang} dir={htmlDir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f0eee9" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={siteName} href={rssPath} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="preload" href="/assets/jbm.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      (() => {
+        const apply = () => {
+          const saved = localStorage.getItem('site-palette');
+          const system = window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'vesper'
+            : 'rose-pine-dawn';
+          document.documentElement.setAttribute('data-palette', saved || system);
+        };
+        apply();
+        document.addEventListener('astro:after-swap', apply);
+      })();
+    </script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <ClientRouter />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href={homePath} aria-label={siteName}>
+          <span>{siteName}</span>
+        </a>
+
+        <details class="nav-menu">
+          <summary class="nav-menu-button" aria-label="Open navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </summary>
+          <div class="nav-menu-panel">
+            <a href={homePath} aria-current={currentPath === homePath ? 'page' : undefined}>{t('nav.home')}</a>
+            <a href={blogPath} aria-current={currentPath.startsWith(blogPrefix) ? 'page' : undefined}>{t('nav.blog')}</a>
+            <a href={aboutPath} aria-current={currentPath === aboutPath ? 'page' : undefined}>{t('nav.about')}</a>
+            <a href={langTogglePath} class="nav-lang-inline" hreflang={lang === 'ar' ? 'en' : 'ar'} aria-label={t('nav.langToggleAria')}>{t('nav.langToggle')}</a>
+          </div>
+        </details>
+
+        <div class="nav-links">
+          <a href={homePath} aria-current={currentPath === homePath ? 'page' : undefined}>{t('nav.home')}</a>
+          <a href={blogPath} aria-current={currentPath.startsWith(blogPrefix) ? 'page' : undefined}>{t('nav.blog')}</a>
+          <a href={aboutPath} aria-current={currentPath === aboutPath ? 'page' : undefined}>{t('nav.about')}</a>
+        </div>
+
+        <div class="nav-tools">
+          <a class="nav-icon-link nav-lang-toggle" href={langTogglePath} hreflang={lang === 'ar' ? 'en' : 'ar'} aria-label={t('nav.langToggleAria')}>
+            <span aria-hidden="true">{t('nav.langToggle')}</span>
+          </a>
+          <a class="nav-icon-link" href="https://github.com/aigeoo" aria-label="GitHub" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.64 7.64 0 0 1 8 3.87c.68 0 1.36.09 2 .26 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+            </svg>
+          </a>
+          <a class="nav-icon-link" href="https://x.com/aigeo_" aria-label="X (Twitter)" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+            </svg>
+          </a>
+          <a class="nav-icon-link" href={rssPath} aria-label="RSS feed">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 11a9 9 0 0 1 9 9" />
+              <path d="M4 4a16 16 0 0 1 16 16" />
+              <circle cx="5" cy="19" r="1" />
+            </svg>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="footer">
+      <span>&copy; {new Date().getFullYear()} {t('footer.name')}</span>
+    </footer>
+
+    <div class="theme-hint" id="theme-hint">
+      <span class="theme-hint-label" id="theme-hint-label">Light</span>
+    </div>
+
+    <div class="theme-overlay" id="theme-overlay" hidden>
+      <div class="theme-overlay-panel" role="dialog" aria-label="Theme switcher" aria-modal="true">
+        <div class="theme-overlay-list" id="theme-overlay-list" role="listbox" aria-label="Themes">
+          <div class="theme-sep"><span>Dark</span></div>
+          <button type="button" role="option" data-value="catppuccin">Catppuccin</button>
+          <button type="button" role="option" data-value="terminal">Terminal</button>
+          <button type="button" role="option" data-value="tokyo-night">Tokyo Night</button>
+          <button type="button" role="option" data-value="dracula">Dracula</button>
+          <button type="button" role="option" data-value="nord">Nord</button>
+          <button type="button" role="option" data-value="gruvbox">Gruvbox</button>
+          <button type="button" role="option" data-value="one-dark">One Dark</button>
+          <button type="button" role="option" data-value="solarized">Solarized</button>
+          <button type="button" role="option" data-value="kanagawa">Kanagawa</button>
+          <button type="button" role="option" data-value="rose-pine">Rose Pine</button>
+          <button type="button" role="option" data-value="vesper">Vesper</button>
+          <div class="theme-sep"><span>Light</span></div>
+          <button type="button" role="option" data-value="catppuccin-latte">Catppuccin Latte</button>
+          <button type="button" role="option" data-value="tokyo-night-day">Tokyo Day</button>
+          <button type="button" role="option" data-value="gruvbox-light">Gruvbox Light</button>
+          <button type="button" role="option" data-value="one-light">One Light</button>
+          <button type="button" role="option" data-value="solarized-light">Solarized Light</button>
+          <button type="button" role="option" data-value="kanagawa-lotus">Kanagawa Lotus</button>
+          <button type="button" role="option" data-value="rose-pine-dawn">Rose Pine Dawn</button>
+        </div>
+        <div class="theme-overlay-footer">
+          <span class="theme-overlay-actions">
+            <button class="theme-close-btn" type="button" id="theme-close-btn">esc</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let controller: AbortController | undefined;
+
+      function initThemeSwitcher() {
+        controller?.abort();
+        controller = new AbortController();
+        const { signal } = controller;
+
+        const overlay = document.getElementById('theme-overlay');
+        const list = document.getElementById('theme-overlay-list');
+        const hintLabel = document.getElementById('theme-hint-label');
+        const themeHint = document.getElementById('theme-hint');
+        const closeBtn = document.getElementById('theme-close-btn');
+        if (!overlay || !list || !themeHint || !closeBtn) return;
+
+        const options = Array.from(list.querySelectorAll<HTMLButtonElement>("[role='option']"));
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+        const saved = localStorage.getItem('site-palette') || '';
+        let committed = saved || defaultPalette();
+
+        function defaultPalette() {
+          return media.matches ? 'vesper' : 'rose-pine-dawn';
+        }
+
+        function setPalette(value: string) {
+          document.documentElement.setAttribute('data-palette', value || defaultPalette());
+        }
+
+        function updateUI(value: string) {
+          const activeValue = value || defaultPalette();
+          for (const opt of options) {
+            opt.setAttribute('aria-selected', String(opt.dataset.value === activeValue));
+          }
+          const active = options.find((opt) => opt.dataset.value === activeValue);
+          if (hintLabel && active) hintLabel.textContent = (active.textContent ?? '').trim();
+        }
+
+        function openOverlay() {
+          if (!overlay) return;
+          overlay.hidden = false;
+          document.body.style.overflow = 'hidden';
+          committed = localStorage.getItem('site-palette') || defaultPalette();
+          updateUI(committed);
+          const active = list?.querySelector<HTMLElement>("[aria-selected='true']") ?? options[0];
+          active?.focus();
+        }
+
+        function closeOverlay() {
+          if (!overlay) return;
+          overlay.hidden = true;
+          document.body.style.overflow = '';
+        }
+
+        function toggleOverlay() {
+          if (overlay?.hidden) openOverlay();
+          else closeOverlay();
+        }
+
+        function preview(index: number) {
+          const opt = options[index];
+          if (!opt) return;
+          setPalette(opt.dataset.value ?? '');
+          updateUI(opt.dataset.value ?? '');
+          opt.focus();
+        }
+
+        function commit(value: string) {
+          setPalette(value);
+          localStorage.setItem('site-palette', value);
+          updateUI(value);
+          closeOverlay();
+        }
+
+        function revert() {
+          setPalette(committed);
+          updateUI(committed);
+          closeOverlay();
+        }
+
+        media.addEventListener('change', () => {
+          if (!localStorage.getItem('site-palette')) {
+            setPalette('');
+            updateUI('');
+          }
+        }, { signal });
+
+        options.forEach((opt, idx) => {
+          opt.addEventListener('click', () => commit(opt.dataset.value ?? ''), { signal });
+          opt.addEventListener('mouseenter', () => preview(idx), { signal });
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (overlay.hidden) return;
+          const idx = options.indexOf(document.activeElement as HTMLButtonElement);
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            preview(idx >= 0 ? Math.min(options.length - 1, idx + 1) : 0);
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            preview(idx >= 0 ? Math.max(0, idx - 1) : options.length - 1);
+          } else if (e.key === 'Enter' && idx >= 0) {
+            e.preventDefault();
+            commit(options[idx]?.dataset.value ?? '');
+          } else if (e.key === 'Escape') {
+            e.preventDefault();
+            revert();
+          } else if (e.key === 'Tab') {
+            // Trap focus inside the dialog while it is open.
+            const focusables = [...options, closeBtn].filter(
+              (el): el is HTMLButtonElement | HTMLElement => el !== null,
+            );
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (!first || !last) return;
+            if (e.shiftKey && document.activeElement === first) {
+              e.preventDefault();
+              (last as HTMLElement).focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+              e.preventDefault();
+              (first as HTMLElement).focus();
+            }
+          }
+        }, { signal });
+
+        if (localStorage.getItem('site-theme-hint-seen') === '1') {
+          themeHint.classList.add('is-seen');
+        }
+        themeHint.addEventListener('mouseenter', () => {
+          localStorage.setItem('site-theme-hint-seen', '1');
+          themeHint.classList.add('is-seen');
+        }, { once: true, signal });
+        themeHint.addEventListener('click', toggleOverlay, { signal });
+        closeBtn.addEventListener('click', revert, { signal });
+        setPalette(saved);
+        updateUI(saved);
+      }
+
+      document.addEventListener('astro:page-load', initThemeSwitcher);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import TypedLede from '../../components/TypedLede.astro';
+import SkillsMarquee from '../../components/SkillsMarquee.astro';
+import { useTranslations, localizePath, dateLocale, type Locale } from '../../i18n/ui';
+
+const lang: Locale = 'ar';
+const t = useTranslations(lang);
+const tagline = 'من قال علمت فقد جهل';
+
+
+// Recent posts across both languages; each links to the post in the language
+// it was written in.
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .map((post) => ({ ...post, slug: post.id.replace(/\.(md|mdx)$/i, '') }))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const personSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'يوسف',
+  jobTitle: 'مطور برمجيات',
+  url: 'https://aigeoo.github.io/ar/',
+  sameAs: ['https://github.com/aigeoo', 'https://x.com/aigeo_'],
+}).replace(/</g, '\\u003c');
+---
+
+<Layout
+  title={t('site.name')}
+  description={t('site.description')}
+  canonicalPath={localizePath('/', lang)}
+  lang={lang}
+>
+  <script type="application/ld+json" is:inline set:html={personSchema} />
+  <main class="content-shell">
+    <div class="page-hero">
+      <h1 class="visually-hidden">{t('nav.home')}</h1>
+      <TypedLede text={tagline} />
+    </div>
+
+    <section class="section" aria-label="أحدث المقالات">
+      {posts.length === 0 ? (
+        <p class="empty-note">{t('blog.empty')}</p>
+      ) : (
+        <nav class="commit-tree" aria-label="أحدث المقالات">
+          <a class="commit-tree-head" href={localizePath('/blog/', lang)} title={t('blog.all')}>{t('blog.head')}</a>
+          {posts.map((post) => (
+            <a href={localizePath(`/blog/${post.slug}/`, post.data.lang)} hreflang={post.data.lang}>
+              <bdi>{post.data.title}</bdi>
+              <span class="commit-tree-date">{post.data.date.toLocaleDateString(dateLocale(post.data.lang), { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</span>
+            </a>
+          ))}
+          <a href={localizePath('/about/', lang)}>{t('nav.about')}</a>
+        </nav>
+      )}
+    </section>
+
+    <SkillsMarquee lang={lang} />
+  </main>
+</Layout>

@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../components/Layout.astro';
+import TypedLede from '../../../components/TypedLede.astro';
+import SkillsMarquee from '../../../components/SkillsMarquee.astro';
+import { useTranslations, localizePath, detectDir, type Locale } from '../../../i18n/ui';
+
+const lang: Locale = 'ar';
+const t = useTranslations(lang);
+const lede = '';
+
+// Both locales list every post; each card links to the post in the language
+// it was written in (an English post lives only under /blog/).
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .map((post) => ({ ...post, slug: post.id.replace(/\.(md|mdx)$/i, '') }))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout
+  title={`${t('blog.title')} — ${t('site.name')}`}
+  description={lede}
+  canonicalPath={localizePath('/blog/', lang)}
+  lang={lang}
+>
+  <main class="content-shell">
+    <section class="page-hero">
+      <h1 class="visually-hidden">{t('blog.title')}</h1>
+      <TypedLede text={lede} />
+    </section>
+
+    <section class="section" aria-label="المقالات">
+      {posts.length === 0 ? (
+        <p style="color: var(--muted); font-family: var(--mono);">{t('blog.empty')}</p>
+      ) : (
+        <div class="post-list">
+          {posts.map((post, index) => {
+            const cardDir = detectDir(post.data.title);
+            return (
+              <article class="post-card" dir={cardDir}>
+                <a class="post-card-link" href={localizePath(`/blog/${post.slug}/`, post.data.lang)} hreflang={post.data.lang}>
+                  <div>
+                    <h2>{post.data.title}{index === 0 && <span class="tag-latest">{t('blog.latest')}</span>}</h2>
+                    <p>{post.data.description}</p>
+                    <p class="post-card-meta">{post.data.date.toLocaleDateString(cardDir === 'rtl' ? 'ar' : 'en', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</p>
+                  </div>
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      )}
+    </section>
+
+    <SkillsMarquee lang={lang} />
+  </main>
+</Layout>

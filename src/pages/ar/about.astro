@@ -1,0 +1,53 @@
+---
+import Layout from '../../components/Layout.astro';
+import TypedLede from '../../components/TypedLede.astro';
+import SkillsMarquee from '../../components/SkillsMarquee.astro';
+import { useTranslations, localizePath, type Locale } from '../../i18n/ui';
+
+const lang: Locale = 'ar';
+const t = useTranslations(lang);
+const lede = 'الليل يسأل: من أنا؟';
+---
+
+<Layout
+  title={`${t('nav.about')} — ${t('site.name')}`}
+  description=""
+  canonicalPath={localizePath('/about/', lang)}
+  lang={lang}
+>
+  <main class="content-shell" data-pagefind-body>
+    <div class="page-hero">
+      <h1 class="visually-hidden">{t('nav.about')}</h1>
+      <TypedLede text={lede} />
+    </div>
+
+    <div class="section" style="max-width: var(--max);">
+      <div class="about-grid">
+        <div class="about-me">
+          <div class="about-card">
+            <h3>عنّي</h3>
+            <div class="about-prose">
+              <p>أنا يوسف — مطوّر وطالب علم.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <h3>تجدني هنا</h3>
+            <div class="edu-entry">
+              <p class="edu-degree"><a href="https://github.com/aigeoo" target="_blank" rel="noopener" style="color: var(--accent);">GitHub</a></p>
+              <p class="edu-school">@aigeoo</p>
+            </div>
+            <div class="edu-entry">
+              <p class="edu-degree"><a href="https://x.com/aigeo_" target="_blank" rel="noopener" style="color: var(--accent);">X (تويتر)</a></p>
+              <p class="edu-school">@aigeo_</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <SkillsMarquee lang={lang} />
+  </main>
+</Layout>

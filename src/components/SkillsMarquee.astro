@@ -1,0 +1,29 @@
+---
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const label = lang === 'ar' ? 'المهارات' : 'Skills';
+
+// Technical terms stay in Latin script — they read the same in both locales.
+const skills = [
+  'Python', 'JavaScript', 'TypeScript', 'Node.js',
+  'Backend', 'REST APIs', 'SQL', 'Redis',
+  'Web Security', 'CTF', 'Reverse Engineering', 'Prototype Pollution',
+  'Linux', 'Bash', 'Git', 'Docker',
+  'Networking', 'Cryptography',
+];
+---
+
+<section class="skills-marquee" aria-label={label}>
+  <ul class="visually-hidden">
+    {skills.map((skill) => <li>{skill}</li>)}
+  </ul>
+  {/* Two copies make the loop seamless; hidden from readers and search. */}
+  <div class="skills-track" aria-hidden="true" data-pagefind-ignore>
+    {[...skills, ...skills].map((skill) => <span class="skills-item">{skill}</span>)}
+  </div>
+</section>

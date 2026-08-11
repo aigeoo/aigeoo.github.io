@@ -1,0 +1,53 @@
+---
+import Layout from '../components/Layout.astro';
+import TypedLede from '../components/TypedLede.astro';
+import SkillsMarquee from '../components/SkillsMarquee.astro';
+import { useTranslations, localizePath, type Locale } from '../i18n/ui';
+
+const lang: Locale = 'en';
+const t = useTranslations(lang);
+const lede = 'Who am I?';
+---
+
+<Layout
+  title={`${t('nav.about')} — ${t('site.name')}`}
+  description="Software developer with a passion for cybersecurity and history."
+  canonicalPath={localizePath('/about/', lang)}
+  lang={lang}
+>
+  <main class="content-shell" data-pagefind-body>
+    <div class="page-hero">
+      <h1 class="visually-hidden">{t('nav.about')}</h1>
+      <TypedLede text={lede} />
+    </div>
+
+    <div class="section" style="max-width: var(--max);">
+      <div class="about-grid">
+        <div class="about-me">
+          <div class="about-card">
+            <h3>About</h3>
+            <div class="about-prose">
+              <p>I'm Yousuf — a software developer with a deep interest in cybersecurity. I specialize in backend development and in finding and patching vulnerabilities.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <h3>Elsewhere</h3>
+            <div class="edu-entry">
+              <p class="edu-degree"><a href="https://github.com/aigeoo" target="_blank" rel="noopener" style="color: var(--accent);">GitHub</a></p>
+              <p class="edu-school">@aigeoo</p>
+            </div>
+            <div class="edu-entry">
+              <p class="edu-degree"><a href="https://x.com/aigeo_" target="_blank" rel="noopener" style="color: var(--accent);">X (Twitter)</a></p>
+              <p class="edu-school">@aigeo_</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <SkillsMarquee lang={lang} />
+  </main>
+</Layout>
